@@ -1,4 +1,3 @@
-import { asyncComputed } from '@vueuse/core'
 import { isNaN, isNumber } from 'es-toolkit/compat'
 import { defineStore } from 'pinia'
 import * as RomanNumerals from 'roman-numerals'
@@ -9,7 +8,7 @@ import { makeSimpleHash } from '@/utils/makeHash'
 const arabicNumberOffset = 18
 const romanNumberOffset = -1
 
-function getPageNumber(pageString: string) {
+export function getPageNumber(pageString: string) {
     if (!isNaN(Number(pageString))) {
         let pageNumber = Number(pageString)
         if (pageNumber >= 1002) {
@@ -25,7 +24,7 @@ function getPageNumber(pageString: string) {
     }
 }
 
-function getPageString(pageNumber: number) {
+export function getPageString(pageNumber: number) {
     if (pageNumber <= arabicNumberOffset) {
         return RomanNumerals.toRoman(pageNumber - romanNumberOffset)
     }
@@ -44,8 +43,6 @@ interface IBook {
     year: number
     linkBase: string
     pageCount: number
-    getPageNumber: (pageString: string) => number
-    getPageString: (pageNumber: number) => string
 }
 
 export interface IBookWithHash extends IBook {
@@ -62,8 +59,6 @@ const booksRaw: IBook[] = [
         year: 2019,
         linkBase: 'https://evb0110.github.io/static/pdf/Arnold-Woerterbuch/pg_',
         pageCount: 1035,
-        getPageNumber,
-        getPageString,
     },
 ]
 
@@ -74,7 +69,7 @@ const cacheRetrievalPromise = (async () => {
 })()
 
 export const useBookStore = defineStore('bookStore', () => {
-    const books = asyncComputed<IBookWithHash[]>(async () => {
+    const { data: books } = useAsyncData('books', async () => {
         const hashPromises = booksRaw.map(makeSimpleHash)
         const hashPromiseAll = Promise.all(hashPromises)
         const hashes = await hashPromiseAll
@@ -89,7 +84,7 @@ export const useBookStore = defineStore('bookStore', () => {
                 to: `/library/book/${hash}`,
             }
         })
-    }, [])
+    }, { default: () => [] })
 
     const bookByHash = computed<Record<string, IBookWithHash>>(() => {
         const result: Record<string, IBookWithHash> = {}

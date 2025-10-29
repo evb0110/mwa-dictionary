@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useElementBounding, useFullscreen, whenever } from '@vueuse/core'
 import { debounce } from 'es-toolkit'
-import { isFunction, isNaN } from 'es-toolkit/compat'
+import { isNaN } from 'es-toolkit/compat'
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy, type RenderTask } from 'pdfjs-dist'
 import { computed, ref, watch } from 'vue'
 import type { LocationQueryValue } from 'vue-router'
 import { useScale } from '@/composables/useScale'
-import { useBookStore, type IBookWithHash } from '@/stores/book'
+import { getPageNumber, getPageString, useBookStore, type IBookWithHash } from '@/stores/book'
 import { getPadding } from '@/utils/getPadding'
 
 GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.296/build/pdf.worker.min.mjs'
@@ -96,23 +96,15 @@ function onMouseMove(e: MouseEvent) {
     content.value.scrollTop = scrollTop - dy
 }
 
-const getPageString = computed(() => {
-    return isFunction(book.value?.getPageString) ? book.value.getPageString : String
-})
-
-const getPageNumber = computed(() => {
-    return isFunction(book.value?.getPageNumber) ? book.value.getPageNumber : Number
-})
-
 const route = useRoute()
 const router = useRouter()
 
-const currentPageString = ref(extractStringFromQuery(route.query.page) || getPageString.value(1))
+const currentPageString = ref(extractStringFromQuery(route.query.page) || getPageString(1))
 
 watch(
     () => route.query.page,
     (newValue) => {
-        currentPageString.value = extractStringFromQuery(newValue) || getPageString.value(1)
+        currentPageString.value = extractStringFromQuery(newValue) || getPageString(1)
     }
 )
 
@@ -147,7 +139,7 @@ const isValidPageNumber = computed(() => {
 watch([pdfContainerWidth, localScale], debouncedRender, { immediate: true })
 
 whenever(currentPageNumber, () => {
-    currentPageString.value = getPageString.value(currentPageNumber.value)
+    currentPageString.value = getPageString(currentPageNumber.value)
 })
 
 whenever(
@@ -263,7 +255,7 @@ async function render() {
 }
 
 function setPageNumber() {
-    currentPageNumber.value = getPageNumber.value(currentPageString.value)
+    currentPageNumber.value = getPageNumber(currentPageString.value)
 }
 
 function navigateToPageNumber(newNumber: number) {

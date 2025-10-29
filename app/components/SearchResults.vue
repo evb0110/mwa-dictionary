@@ -28,8 +28,8 @@ const hasMore = computed(() => {
 })
 
 const currentBook = computed(() => {
-    if (!props.dictKey || !bookStore.books) return null
-    return bookStore.books.find(book => book.key === props.dictKey) || null
+    if (!props.dictKey || !bookStore.books.value) return null
+    return bookStore.books.value.find(book => book.key === props.dictKey) || null
 })
 
 function getPageNumber(line: string): string | undefined {

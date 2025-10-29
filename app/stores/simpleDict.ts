@@ -2,7 +2,6 @@ import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
 import { computed, watchEffect } from 'vue'
 import type { IDict } from '@/types'
-import { useGetResource } from '@/composables/useGetResource'
 import { useSearcher } from '@/composables/useSearcher'
 import { MAALULA_DICTS_URL } from '@/data/assets'
 
@@ -15,9 +14,7 @@ const initialDictionaries: IDict[] = [
 ]
 
 export const useSimpleDictStore = defineStore('simpleDictStore', () => {
-    const dictResource = useGetResource<Record<string, string[]>>(MAALULA_DICTS_URL, {})
-
-    const dictData = computed(() => dictResource.data.value ?? {})
+    const { data: dictData } = useFetch<Record<string, string[]>>(MAALULA_DICTS_URL, { default: () => ({}) })
 
     const chosenDictionaries = useRouteQuery<string[]>('dict', [])
 

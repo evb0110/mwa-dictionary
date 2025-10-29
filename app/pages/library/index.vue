@@ -3,7 +3,7 @@ import { useBookStore } from '@/stores/book'
 
 const bookStore = useBookStore()
 
-const books = computed(() => bookStore.books)
+const books = bookStore.books
 
 useSeoMeta({
     title: 'Library - Modern Western Aramaic Dictionary',
