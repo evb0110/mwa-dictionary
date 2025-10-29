@@ -3,11 +3,30 @@ defineProps<{
     title: string
     subtitle?: string
 }>()
+
+const menuItems = [
+    [
+        {
+            label: 'Dictionary',
+            icon: 'i-lucide-book-open',
+            to: '/'
+        },
+        {
+            label: 'Library',
+            icon: 'i-lucide-library',
+            to: '/library'
+        }
+    ]
+]
 </script>
 
 <template>
     <div class="app-header">
         <div class="header-content">
+            <UDropdownMenu :items="menuItems">
+                <UButton icon="i-lucide-menu" color="neutral" variant="outline" />
+            </UDropdownMenu>
+
             <div class="title-section">
                 <span class="title">{{ title }}</span>
                 <span v-if="subtitle" class="subtitle">{{ subtitle }}</span>
