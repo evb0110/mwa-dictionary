@@ -69,22 +69,16 @@ const cacheRetrievalPromise = (async () => {
 })()
 
 export const useBookStore = defineStore('bookStore', () => {
-    const { data: books } = useAsyncData('books', async () => {
-        const hashPromises = booksRaw.map(makeSimpleHash)
-        const hashPromiseAll = Promise.all(hashPromises)
-        const hashes = await hashPromiseAll
-        return booksRaw.map((book, index): IBookWithHash => {
-            const hash = hashes[index]
-            if (!hash) {
-                throw new Error('Hash generation failed for book')
-            }
+    const books = computed<IBookWithHash[]>(() => {
+        return booksRaw.map((book): IBookWithHash => {
+            const hash = makeSimpleHash(book)
             return {
                 ...book,
                 hash,
                 to: `/library/book/${hash}`,
             }
         })
-    }, { default: () => [] })
+    })
 
     const bookByHash = computed<Record<string, IBookWithHash>>(() => {
         const result: Record<string, IBookWithHash> = {}
