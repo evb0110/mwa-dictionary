@@ -59,6 +59,10 @@ function handleClear() {
     min-width: 0;
 }
 
+.input-flex :deep(input) {
+    font-family: Arial, sans-serif;
+}
+
 .search-button {
     flex-shrink: 0;
 }

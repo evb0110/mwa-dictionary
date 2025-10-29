@@ -2,30 +2,6 @@
 
 A web application for searching and accessing Modern Western Aramaic linguistic resources.
 
----
-
-## 🚨 CRITICAL: Git Commit Attribution Rules 🚨
-
-**ABSOLUTE PROHIBITION - NEVER ADD CLAUDE ATTRIBUTION TO COMMITS:**
-
-- ❌ **NEVER** add "Generated with Claude Code" to commit messages
-- ❌ **NEVER** add "Co-Authored-By: Claude" to commit messages
-- ❌ **NEVER** include any AI attribution in git commits
-- ❌ **NEVER** use emoji robots (🤖) or similar in commit messages
-
-**RATIONALE:**
-- Professional git history must not contain AI tool attribution
-- Commits represent human authorship and decision-making
-- Tool attribution clutters git log and appears unprofessional
-- Git history is permanent and public - keep it clean
-
-**ENFORCEMENT:**
-- Any commits with Claude attribution MUST be rewritten
-- Use `git rebase -i` or `git filter-branch` to clean history
-- Force push is acceptable to maintain clean commit history
-
----
-
 ## Tech Stack
 
 - **Framework**: Nuxt 4.2.0 with Vue 3 Composition API + TypeScript
