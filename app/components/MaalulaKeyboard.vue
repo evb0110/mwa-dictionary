@@ -15,6 +15,7 @@ const emit = defineEmits<{
             square
             color="neutral"
             variant="outline"
+            class="min-w-8 flex items-center justify-center"
             @click="emit('insertChar', char)"
         >
             <span class="maalula-button">{{ char }}</span>
