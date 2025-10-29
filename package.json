@@ -1,0 +1,47 @@
+{
+    "name": "mwa-dictionary",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "format": "prettier --write .",
+        "lint": "eslint --fix .",
+        "lint:fix": "pnpm format && pnpm lint",
+        "typecheck": "nuxt typecheck"
+    },
+    "dependencies": {
+        "@iconify-json/lucide": "^1.2.71",
+        "@iconify-json/simple-icons": "^1.2.55",
+        "@nuxt/image": "^1.11.0",
+        "@nuxt/ui": "^4.1.0",
+        "@pinia/nuxt": "^0.11.2",
+        "@vueuse/core": "^14.0.0",
+        "@vueuse/nuxt": "^14.0.0",
+        "es-toolkit": "^1.41.0",
+        "idb": "^8.0.3",
+        "nuxt": "^4.2.0",
+        "pdfjs-dist": "^5.4.296",
+        "roman-numerals": "^0.3.2",
+        "uuid": "^13.0.0",
+        "vue-dragscroll": "^4.0.6"
+    },
+    "devDependencies": {
+        "@nuxt/eslint": "^1.9.0",
+        "@stylistic/eslint-plugin": "^5.5.0",
+        "@types/roman-numerals": "^0.3.2",
+        "@types/uuid": "^11.0.0",
+        "eslint": "^9.38.0",
+        "prettier": "^3.6.2",
+        "prettier-plugin-organize-imports": "^4.3.0",
+        "prettier-plugin-tailwindcss": "^0.7.1",
+        "typescript": "^5.9.3",
+        "vue-tsc": "^3.1.2"
+    },
+    "resolutions": {
+        "unimport": "4.1.1"
+    },
+    "packageManager": "pnpm@10.19.0"
+}
