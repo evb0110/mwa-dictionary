@@ -277,6 +277,7 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevrons-left"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="navigateToPageNumber(1)"
                         />
                         <UButton
@@ -284,6 +285,7 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevron-left"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="navigateToPageNumber(currentPageNumber - 1)"
                         />
 
@@ -304,6 +306,7 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevron-right"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="navigateToPageNumber(currentPageNumber + 1)"
                         />
                         <UButton
@@ -311,6 +314,7 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevrons-right"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="navigateToPageNumber(totalPages)"
                         />
                     </div>
@@ -322,30 +326,35 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-zoom-out"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="zoomOut"
                         />
                         <UButton
                             icon="i-lucide-zoom-in"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="zoomIn"
                         />
                         <UButton
                             icon="i-lucide-arrow-left-right"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="fitWidth"
                         />
                         <UButton
                             icon="i-lucide-arrow-up-down"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="fitHeight"
                         />
                         <UButton
                             :icon="isFullscreen ? 'i-lucide-minimize' : 'i-lucide-expand'"
                             variant="ghost"
                             size="lg"
+                            square
                             @click="toggle"
                         />
                     </div>
@@ -407,6 +416,10 @@ function navigateToPageNumber(newNumber: number) {
     border-radius: 9999px;
 }
 
+.nav-section :deep(button) {
+    border-radius: 9999px;
+}
+
 .nav-section :deep(button .iconify) {
     width: 1.75rem !important;
     height: 1.75rem !important;
@@ -419,6 +432,10 @@ function navigateToPageNumber(newNumber: number) {
     padding: 0.25rem;
     border: 1px solid #e5e7eb;
     background-color: #f8fafc;
+    border-radius: 9999px;
+}
+
+.zoom-section :deep(button) {
     border-radius: 9999px;
 }
 
