@@ -1,5 +1,5 @@
-import { idbGet, idbSet } from '@/utils/idb'
 import { bookByHash } from '@/data/books'
+import { idbGet, idbSet } from '@/utils/idb'
 
 let uintCache: Map<string, Uint8Array>
 const cacheRetrievalPromise = (async () => {

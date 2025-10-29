@@ -35,6 +35,7 @@
         "@nuxt/fonts": "^0.11.4",
         "@stylistic/eslint-plugin": "^5.5.0",
         "@tailwindcss/vite": "^4.1.16",
+        "@types/node": "^24.9.2",
         "@types/roman-numerals": "^0.3.2",
         "eslint": "^9.38.0",
         "prettier": "^3.6.2",

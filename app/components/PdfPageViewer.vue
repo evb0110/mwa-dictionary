@@ -5,11 +5,11 @@ import { isNaN } from 'es-toolkit/compat'
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy, type RenderTask } from 'pdfjs-dist'
 import { computed, ref, watch } from 'vue'
 import type { LocationQueryValue } from 'vue-router'
-import { useScale } from '@/composables/useScale'
 import { getPdfPage } from '@/composables/usePdfCache'
+import { useScale } from '@/composables/useScale'
 import { bookByHash, type IBookWithHash } from '@/data/books'
-import { getPageNumber, getPageString } from '@/utils/pageNumbers'
 import { getPadding } from '@/utils/getPadding'
+import { getPageNumber, getPageString } from '@/utils/pageNumbers'
 
 GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.296/build/pdf.worker.min.mjs'
 

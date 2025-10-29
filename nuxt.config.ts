@@ -6,10 +6,7 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
-    routeRules: {
-        '/': { prerender: true },
-        '/library/book/**': { ssr: false },
-    },
+    routeRules: { '/library/book/**': { ssr: false } },
 
     devServer: { port: 3600 },
 

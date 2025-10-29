@@ -9,14 +9,14 @@ const menuItems = [
         {
             label: 'Dictionary',
             icon: 'i-lucide-book-open',
-            to: '/'
+            to: '/',
         },
         {
             label: 'Library',
             icon: 'i-lucide-library',
-            to: '/library'
-        }
-    ]
+            to: '/library',
+        },
+    ],
 ]
 </script>
 

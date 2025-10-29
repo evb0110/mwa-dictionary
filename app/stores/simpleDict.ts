@@ -1,9 +1,8 @@
 import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
-import { computed, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import type { IDict } from '@/types'
 import { useSearcher } from '@/composables/useSearcher'
-import { MAALULA_DICTS_URL } from '@/data/assets'
 
 const initialDictionaries: IDict[] = [
     {
@@ -14,9 +13,8 @@ const initialDictionaries: IDict[] = [
 ]
 
 export const useSimpleDictStore = defineStore('simpleDictStore', () => {
-    const { data: dictData } = useFetch<Record<string, string[]>>(MAALULA_DICTS_URL, { default: () => ({}) })
-
     const chosenDictionaries = useRouteQuery<string[]>('dict', [])
+    const searchTick = ref(0)
 
     const {
         searcher,
@@ -30,47 +28,21 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
         }
     })
 
-    const matchingDictLinesArr = computed(() => {
-        if (!searcherString.value) {
-            return []
+    function updateSearcherString(value: string) {
+        if (searcherString.value !== value) {
+            searcherString.value = value
+            return
         }
-        return initialDictionaries.map(({
-            key,
-            title,
-        }) => {
-            const lexicon = getLexiconByKeyName(key)
-            const matchingLines = lexicon
-                .filter((line: string) => {
-                    if (searchScope.value === 'lemma') {
-                        const cleaned = line.replace(/^{стр\.\s*\d+}\s*/, '')
-                        const anchored = new RegExp(`^${searcher.value.value}`, searcher.value.regex.flags)
-                        return anchored.test(cleaned)
-                    }
-                    return searcher.value.regex.test(line)
-                })
-                .map((line: string) => ({
-                    title: '',
-                    line,
-                }))
-            return {
-                key,
-                title,
-                lines: matchingLines,
-            }
-        })
-    })
-
-    function getLexiconByKeyName(keyName: string) {
-        return dictData.value?.[keyName] || []
+        searchTick.value += 1
     }
 
     return {
         searcher,
         initialDictionaries,
-        dictData,
         searcherString,
         searchScope,
         chosenDictionaries,
-        matchingDictLinesArr,
+        searchTick,
+        updateSearcherString,
     }
 })

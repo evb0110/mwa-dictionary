@@ -4,10 +4,32 @@ import { useSimpleDictStore } from '@/stores/simpleDict'
 
 const simpleDictStore = useSimpleDictStore()
 
+const requestSignature = computed(() => {
+    const dicts = [...simpleDictStore.chosenDictionaries].sort().join(',')
+    return `${simpleDictStore.searcherString || ''}::${simpleDictStore.searchScope}::${dicts}`
+})
+
+const { data: serverResults } = await useAsyncData('dict-search', () =>
+    $fetch('/api/dictionary/search', {
+        query: {
+            q: simpleDictStore.searcherString || '',
+            scope: simpleDictStore.searchScope,
+            dict: simpleDictStore.chosenDictionaries,
+        },
+    }),
+{
+    watch: [
+        requestSignature,
+        () => simpleDictStore.searchTick,
+    ],
+}
+)
+
 const matchingDictLinesArr = computed(() => {
-    return simpleDictStore.matchingDictLinesArr.filter(({ key }: { key: string }) =>
-        simpleDictStore.chosenDictionaries.includes(key)
-    )
+    const all = serverResults.value || []
+    return all
+        .filter(({ key }: { key: string }) => simpleDictStore.chosenDictionaries.includes(key))
+        .filter((dict: { lines: unknown[] }) => Array.isArray(dict.lines) && dict.lines.length > 0)
 })
 </script>
 
@@ -34,6 +56,7 @@ const matchingDictLinesArr = computed(() => {
                         v-if="dict.lines.length"
                         :lines-matching="dict.lines"
                         :searcher="simpleDictStore.searcher"
+                        :scope="simpleDictStore.searchScope"
                         :dict-key="dict.key"
                     />
                 </div>

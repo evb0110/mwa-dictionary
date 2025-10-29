@@ -19,12 +19,12 @@ const scopeOptions = [
 ]
 
 function search() {
-    simpleDictStore.searcherString = searcherInternal.value
+    simpleDictStore.updateSearcherString(searcherInternal.value)
 }
 
 function clearSearch() {
     searcherInternal.value = ''
-    search()
+    simpleDictStore.updateSearcherString('')
 }
 
 function insertChar(char: string) {
@@ -43,11 +43,19 @@ watch(
 <template>
     <div class="searcher">
         <div class="search-row">
+            <URadioGroup
+                v-model="simpleDictStore.searchScope"
+                :items="scopeOptions"
+                orientation="horizontal"
+                variant="list"
+                size="lg"
+                class="scope-radio flex items-center"
+            />
             <UInput
                 v-model="searcherInternal"
                 placeholder="Search in dictionary..."
                 icon="i-lucide-search"
-                size="lg"
+                size="xl"
                 class="input-flex"
                 @keyup.enter="search"
             >
@@ -72,26 +80,18 @@ watch(
                 label="Search"
                 @click="search"
             />
-            <URadioGroup
-                v-model="simpleDictStore.searchScope"
-                :items="scopeOptions"
-                orientation="horizontal"
-                variant="list"
-                size="lg"
-                class="scope-radio flex items-center"
-            />
         </div>
         <div class="keyboard-buttons">
             <UButton
                 v-for="char in maalulaButtons"
                 :key="char"
-                size="sm"
+                size="md"
                 square
                 color="neutral"
                 variant="outline"
                 @click="insertChar(char,)"
             >
-                {{ char }}
+                <span class="maalula-button">{{ char }}</span>
             </UButton>
         </div>
     </div>
@@ -137,5 +137,9 @@ watch(
     display: flex;
     align-items: center;
     gap: 0.25rem;
+}
+
+.maalula-button {
+  font-family: Arial, serif;
 }
 </style>
