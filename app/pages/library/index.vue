@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { useBookStore } from '@/stores/book'
-
-const bookStore = useBookStore()
-
-const books = bookStore.books
+import { books } from '@/data/books'
 
 useSeoMeta({
     title: 'Library - Modern Western Aramaic Dictionary',

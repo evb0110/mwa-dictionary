@@ -6,7 +6,9 @@ import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy, type RenderTas
 import { computed, ref, watch } from 'vue'
 import type { LocationQueryValue } from 'vue-router'
 import { useScale } from '@/composables/useScale'
-import { getPageNumber, getPageString, useBookStore, type IBookWithHash } from '@/stores/book'
+import { getPdfPage } from '@/composables/usePdfCache'
+import { bookByHash, type IBookWithHash } from '@/data/books'
+import { getPageNumber, getPageString } from '@/utils/pageNumbers'
 import { getPadding } from '@/utils/getPadding'
 
 GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.296/build/pdf.worker.min.mjs'
@@ -30,10 +32,8 @@ const props = defineProps<{
     } | null
 }>()
 
-const bookStore = useBookStore()
-
 const book = computed<IBookWithHash | undefined>(() => {
-    return bookStore.bookByHash[props.hash]
+    return bookByHash[props.hash]
 })
 
 const pdfContainer = ref<HTMLElement | null>(null)
@@ -149,12 +149,12 @@ whenever(
 
         setPageNumber()
 
-        const uint = await bookStore.getUintPromise(props.hash, currentPageNumber.value)
+        const uint = await getPdfPage(props.hash, currentPageNumber.value)
         if (currentPageNumber.value - 1 > 0) {
-            bookStore.getUintPromise(props.hash, currentPageNumber.value - 1)
+            getPdfPage(props.hash, currentPageNumber.value - 1)
         }
         if (currentPageNumber.value + 1 <= totalPages.value) {
-            bookStore.getUintPromise(props.hash, currentPageNumber.value + 1)
+            getPdfPage(props.hash, currentPageNumber.value + 1)
         }
 
         try {

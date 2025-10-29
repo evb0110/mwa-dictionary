@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { SearcherWrapper } from '@/composables/useSearcher'
-import { useBookStore } from '@/stores/book'
+import { books, type IBookWithHash } from '@/data/books'
 
 interface ILine {
     line: string
@@ -13,8 +13,6 @@ const props = defineProps<{
     searcher: SearcherWrapper
     dictKey?: string
 }>()
-
-const bookStore = useBookStore()
 
 const pageSize = 50
 const currentPage = ref(1)
@@ -28,8 +26,8 @@ const hasMore = computed(() => {
 })
 
 const currentBook = computed(() => {
-    if (!props.dictKey || !bookStore.books.value) return null
-    return bookStore.books.value.find(book => book.key === props.dictKey) || null
+    if (!props.dictKey) return null
+    return books.find((book: IBookWithHash) => book.key === props.dictKey) ?? null
 })
 
 function getPageNumber(line: string): string | undefined {
