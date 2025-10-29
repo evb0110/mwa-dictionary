@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import { books } from '@/data/books'
-
-useSeoMeta({
-    title: 'Library - Modern Western Aramaic Dictionary',
-    description: 'Browse available dictionaries and reference materials for Modern Western Aramaic',
-})
 </script>
 
 <template>
@@ -63,8 +58,9 @@ useSeoMeta({
     margin: 0 auto;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    align-items: start;
 }
 
 .book-card {
