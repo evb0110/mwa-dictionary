@@ -6,6 +6,16 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
+    ui: {
+        global: true,
+        safelistColors: ['primary', 'neutral'],
+    },
+
+    app: {
+        pageTransition: false,
+        layoutTransition: false,
+    },
+
     routeRules: {
         '/': { prerender: true },
         '/library/book/**': { ssr: false },
