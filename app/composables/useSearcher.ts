@@ -1,5 +1,5 @@
-import { computed } from 'vue'
 import { useRouteQuery } from '@vueuse/router'
+import { computed } from 'vue'
 
 export type TSearchScope = 'full' | 'lemma'
 

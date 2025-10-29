@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import type { SearcherWrapper } from '@/composables/useSearcher'
+import type { SearcherWrapper, TSearchScope } from '@/composables/useSearcher'
 import { books, type IBookWithHash } from '@/data/books'
 
 interface ILine {
@@ -12,6 +12,7 @@ const props = defineProps<{
     linesMatching: ILine[]
     searcher: SearcherWrapper
     dictKey?: string
+    scope?: TSearchScope
 }>()
 
 const pageSize = 50
@@ -83,7 +84,7 @@ onUnmounted(() => {
                     <UBadge color="primary" variant="solid">Page {{ getPageNumber(line,) }}</UBadge>
                 </NuxtLink>
                 <div class="entry-text">
-                    <GrepLine :str="getCleanedLine(line,)" :searcher="searcher" />
+                    <GrepLine :str="getCleanedLine(line,)" :searcher="searcher" :scope="scope" />
                 </div>
             </div>
         </div>
