@@ -22,7 +22,7 @@ const { data: serverResults } = await useAsyncData('dict-search', () =>
         requestSignature,
         () => simpleDictStore.searchTick,
     ],
-}
+},
 )
 
 const matchingDictLinesArr = computed(() => {

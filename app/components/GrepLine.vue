@@ -166,7 +166,7 @@ const arrayOfArrays = computed(() => {
             <span
                 v-for="(part, index) in stringArray"
                 :key="`${paragraphIndex}-${index}`"
-                :class="{ highlight: part.highlight, }"
+                :class="{ highlight: part.highlight }"
             >
                 {{ part.text }}
             </span>
