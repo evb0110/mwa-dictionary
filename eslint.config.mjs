@@ -101,6 +101,16 @@ export default withNuxt(
             'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
             'vue/multi-word-component-names': 'off',
             'vue/no-v-html': 'off',
+            'vue/comma-dangle': [
+                'error',
+                {
+                    arrays: 'always-multiline',
+                    objects: 'always-multiline',
+                    imports: 'always-multiline',
+                    exports: 'always-multiline',
+                    functions: 'always-multiline',
+                },
+            ],
 
             '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
 
@@ -157,7 +167,7 @@ export default withNuxt(
                     objects: 'always-multiline',
                     imports: 'always-multiline',
                     exports: 'always-multiline',
-                    functions: 'never',
+                    functions: 'always-multiline',
                 },
             ],
 
@@ -259,5 +269,5 @@ export default withNuxt(
                 },
             ],
         },
-    }
+    },
 )

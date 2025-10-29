@@ -105,7 +105,7 @@ watch(
     () => route.query.page,
     (newValue) => {
         currentPageString.value = extractStringFromQuery(newValue) || getPageString(1)
-    }
+    },
 )
 
 watch(currentPageString, (newValue) => {
@@ -179,7 +179,7 @@ whenever(
     {
         immediate: true,
         deep: true,
-    }
+    },
 )
 
 async function render() {
@@ -277,14 +277,14 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevrons-left"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(1,)"
+                            @click="navigateToPageNumber(1)"
                         />
                         <UButton
                             :disabled="currentPageNumber <= 1"
                             icon="i-lucide-chevron-left"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(currentPageNumber - 1,)"
+                            @click="navigateToPageNumber(currentPageNumber - 1)"
                         />
 
                         <div class="page-number gap">
@@ -304,14 +304,14 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevron-right"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(currentPageNumber + 1,)"
+                            @click="navigateToPageNumber(currentPageNumber + 1)"
                         />
                         <UButton
                             :disabled="currentPageNumber === totalPages"
                             icon="i-lucide-chevrons-right"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(totalPages,)"
+                            @click="navigateToPageNumber(totalPages)"
                         />
                     </div>
                 </template>

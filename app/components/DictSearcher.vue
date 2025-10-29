@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { maalulaButtons } from '@/data/maalulaButtons'
 import { useSimpleDictStore } from '@/stores/simpleDict'
 
 const simpleDictStore = useSimpleDictStore()
@@ -36,7 +35,7 @@ watch(
     (value) => {
         searcherInternal.value = value
     },
-    { immediate: true }
+    { immediate: true },
 )
 </script>
 
@@ -51,49 +50,13 @@ watch(
                 size="lg"
                 class="scope-radio flex items-center"
             />
-            <UInput
+            <DictSearchInput
                 v-model="searcherInternal"
-                placeholder="Search in dictionary..."
-                icon="i-lucide-search"
-                size="xl"
-                class="input-flex"
-                @keyup.enter="search"
-            >
-                <template #trailing>
-                    <div class="trailing-actions">
-                        <UButton
-                            v-if="searcherInternal"
-                            color="neutral"
-                            variant="link"
-                            icon="i-lucide-x"
-                            @click="clearSearch"
-                        />
-                    </div>
-                </template>
-            </UInput>
-            <UButton
-                class="search-button"
-                :disabled="!searcherInternal"
-                color="primary"
-                size="lg"
-                icon="i-lucide-search"
-                label="Search"
-                @click="search"
+                @search="search"
+                @clear="clearSearch"
             />
         </div>
-        <div class="keyboard-buttons">
-            <UButton
-                v-for="char in maalulaButtons"
-                :key="char"
-                size="md"
-                square
-                color="neutral"
-                variant="outline"
-                @click="insertChar(char,)"
-            >
-                <span class="maalula-button">{{ char }}</span>
-            </UButton>
-        </div>
+        <MaalulaKeyboard @insert-char="insertChar" />
     </div>
 </template>
 
@@ -112,34 +75,8 @@ watch(
     align-items: center;
 }
 
-.input-flex {
-    flex: 1;
-    min-width: 0;
-}
-
-.search-button {
-    flex-shrink: 0;
-}
-
 .scope-radio {
     margin-left: auto;
     align-self: stretch;
-}
-
-.keyboard-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    justify-content: center;
-    width: 100%;
-}
-.trailing-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.maalula-button {
-  font-family: Arial, serif;
 }
 </style>

@@ -73,18 +73,18 @@ onUnmounted(() => {
 
 <template>
     <div class="search-results">
-        <div v-for="({ line, }, index) in visibleItems" :key="index" class="entry-item">
+        <div v-for="({ line }, index) in visibleItems" :key="index" class="entry-item">
             <div class="entry-content">
                 <NuxtLink
-                    v-if="getPageNumber(line,) && currentBook"
-                    :to="getBookRoute(getPageNumber(line,),)"
+                    v-if="getPageNumber(line) && currentBook"
+                    :to="getBookRoute(getPageNumber(line))"
                     target="_blank"
                     class="page-badge"
                 >
-                    <UBadge color="primary" variant="solid">Page {{ getPageNumber(line,) }}</UBadge>
+                    <UBadge color="primary" variant="solid">Page {{ getPageNumber(line) }}</UBadge>
                 </NuxtLink>
                 <div class="entry-text">
-                    <GrepLine :str="getCleanedLine(line,)" :searcher="searcher" :scope="scope" />
+                    <GrepLine :str="getCleanedLine(line)" :searcher="searcher" :scope="scope" />
                 </div>
             </div>
         </div>

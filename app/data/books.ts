@@ -37,5 +37,5 @@ export const books: IBookWithHash[] = booksRaw.map((book) => {
 })
 
 export const bookByHash: Record<string, IBookWithHash> = Object.fromEntries(
-    books.map(book => [book.hash, book])
+    books.map(book => [book.hash, book]),
 )
