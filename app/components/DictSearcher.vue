@@ -7,6 +7,17 @@ const simpleDictStore = useSimpleDictStore()
 
 const searcherInternal = ref('')
 
+const scopeOptions = [
+    {
+        label: 'Full text',
+        value: 'full',
+    },
+    {
+        label: 'Lemma only',
+        value: 'lemma',
+    },
+]
+
 function search() {
     simpleDictStore.searcherString = searcherInternal.value
 }
@@ -36,8 +47,9 @@ watch(
                 v-model="searcherInternal"
                 placeholder="Search in dictionary..."
                 icon="i-lucide-search"
-                @keyup.enter="search"
+                size="lg"
                 class="input-flex"
+                @keyup.enter="search"
             >
                 <template #trailing>
                     <div class="trailing-actions">
@@ -55,13 +67,20 @@ watch(
                 class="search-button"
                 :disabled="!searcherInternal"
                 color="primary"
-                size="md"
+                size="lg"
                 icon="i-lucide-search"
                 label="Search"
                 @click="search"
             />
+            <URadioGroup
+                v-model="simpleDictStore.searchScope"
+                :items="scopeOptions"
+                orientation="horizontal"
+                variant="list"
+                size="lg"
+                class="scope-radio flex items-center"
+            />
         </div>
-
         <div class="keyboard-buttons">
             <UButton
                 v-for="char in maalulaButtons"
@@ -102,6 +121,11 @@ watch(
     flex-shrink: 0;
 }
 
+.scope-radio {
+    margin-left: auto;
+    align-self: stretch;
+}
+
 .keyboard-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -109,12 +133,9 @@ watch(
     justify-content: center;
     width: 100%;
 }
-
 .trailing-actions {
     display: flex;
     align-items: center;
     gap: 0.25rem;
 }
-
 </style>
-

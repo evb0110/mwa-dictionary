@@ -21,6 +21,7 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
     const {
         searcher,
         searcherString,
+        searchScope,
     } = useSearcher()
 
     watchEffect(() => {
@@ -39,7 +40,14 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
         }) => {
             const lexicon = getLexiconByKeyName(key)
             const matchingLines = lexicon
-                .filter((line: string) => searcher.value.regex.test(line))
+                .filter((line: string) => {
+                    if (searchScope.value === 'lemma') {
+                        const cleaned = line.replace(/^{стр\.\s*\d+}\s*/, '')
+                        const anchored = new RegExp(`^${searcher.value.value}`, searcher.value.regex.flags)
+                        return anchored.test(cleaned)
+                    }
+                    return searcher.value.regex.test(line)
+                })
                 .map((line: string) => ({
                     title: '',
                     line,
@@ -61,6 +69,7 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
         initialDictionaries,
         dictData,
         searcherString,
+        searchScope,
         chosenDictionaries,
         matchingDictLinesArr,
     }
