@@ -33,6 +33,6 @@ const emit = defineEmits<{
 }
 
 .maalula-button {
-  font-family: Arial, serif;
+  font-family: Arial, sans-serif;
 }
 </style>
