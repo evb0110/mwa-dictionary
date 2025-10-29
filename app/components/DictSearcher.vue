@@ -31,44 +31,50 @@ watch(
 
 <template>
     <div class="searcher">
-        <UInput
-            v-model="searcherInternal"
-            placeholder="Search in dictionary..."
-            icon="i-lucide-search"
-            @keyup.enter="search"
-        >
-            <template #trailing>
-                <UButton
-                    v-if="searcherInternal"
-                    color="neutral"
-                    variant="link"
-                    icon="i-lucide-x"
-                    @click="clearSearch"
-                />
-            </template>
-        </UInput>
+        <div class="search-row">
+            <UInput
+                v-model="searcherInternal"
+                placeholder="Search in dictionary..."
+                icon="i-lucide-search"
+                @keyup.enter="search"
+                class="input-flex"
+            >
+                <template #trailing>
+                    <div class="trailing-actions">
+                        <UButton
+                            v-if="searcherInternal"
+                            color="neutral"
+                            variant="link"
+                            icon="i-lucide-x"
+                            @click="clearSearch"
+                        />
+                    </div>
+                </template>
+            </UInput>
+            <UButton
+                class="search-button"
+                :disabled="!searcherInternal"
+                color="primary"
+                size="md"
+                icon="i-lucide-search"
+                label="Search"
+                @click="search"
+            />
+        </div>
 
         <div class="keyboard-buttons">
             <UButton
                 v-for="char in maalulaButtons"
                 :key="char"
-                size="xs"
-                variant="ghost"
+                size="sm"
+                square
+                color="neutral"
+                variant="outline"
                 @click="insertChar(char,)"
             >
                 {{ char }}
             </UButton>
         </div>
-
-        <UButton
-            :disabled="!searcherInternal"
-            color="primary"
-            size="lg"
-            icon="i-lucide-search"
-            @click="search"
-        >
-            Search
-        </UButton>
     </div>
 </template>
 
@@ -81,10 +87,34 @@ watch(
     margin: 0 auto;
 }
 
+.search-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.input-flex {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-button {
+    flex-shrink: 0;
+}
+
 .keyboard-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.375rem;
     justify-content: center;
+    width: 100%;
 }
+
+.trailing-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
 </style>
+

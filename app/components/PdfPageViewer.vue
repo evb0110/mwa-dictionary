@@ -399,8 +399,12 @@ function navigateToPageNumber(newNumber: number) {
 
 .nav-section {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
     align-items: center;
+    padding: 0.25rem;
+    border: 1px solid #e5e7eb;
+    background-color: #f8fafc;
+    border-radius: 9999px;
 }
 
 .nav-section :deep(button .iconify) {
@@ -410,8 +414,12 @@ function navigateToPageNumber(newNumber: number) {
 
 .zoom-section {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
     align-items: center;
+    padding: 0.25rem;
+    border: 1px solid #e5e7eb;
+    background-color: #f8fafc;
+    border-radius: 9999px;
 }
 
 .zoom-section :deep(button .iconify) {
