@@ -41,8 +41,12 @@ const menuItems = [
 
 <style scoped>
 .app-header {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.03);
     padding: 0.75rem 2rem;
 }
 
