@@ -61,7 +61,7 @@ export default withNuxt(
                 {
                     startTag: 'never',
                     endTag: 'never',
-                    selfClosingTag: 'never',
+                    selfClosingTag: 'always',
                 },
             ],
             'vue/html-quotes': ['error', 'double'],

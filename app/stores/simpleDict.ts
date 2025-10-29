@@ -1,89 +1,34 @@
+import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
-import { computed, ref, watch, watchEffect } from 'vue'
-import type { LocationQueryValue } from 'vue-router'
+import { computed, watchEffect } from 'vue'
+import type { IDict } from '@/types'
+import { useGetResource } from '@/composables/useGetResource'
 import { useSearcher } from '@/composables/useSearcher'
-import { AssetName } from '@/data/assets'
-import { useAssetsStore } from '@/stores/assets'
-import { ELanguage, ETranslationLanguage, type IDict } from '@/types'
+import { MAALULA_DICTS_URL } from '@/data/assets'
 
-function extractArrayFromQuery(value: LocationQueryValue | LocationQueryValue[] | undefined): string[] {
-    if (value === undefined || value === null) {
-        return []
-    }
-    if (Array.isArray(value)) {
-        return value.filter((v): v is string => v !== null)
-    }
-    try {
-        const parsed = JSON.parse(value)
-        return Array.isArray(parsed) ? parsed : []
-    } catch {
-        return []
-    }
-}
-
-const Lexica: Partial<Record<ELanguage, IDict[]>> = {
-    [ELanguage.maalula]: [
-        {
-            key: 'arnold',
-            title: 'Arnold',
-            isChosen: true,
-            translationLanguage: ETranslationLanguage.German,
-        },
-    ],
-}
+const initialDictionaries: IDict[] = [
+    {
+        key: 'arnold',
+        title: 'Arnold',
+        isChosen: true,
+    },
+]
 
 export const useSimpleDictStore = defineStore('simpleDictStore', () => {
-    const assetsStore = useAssetsStore()
-    const route = useRoute()
-    const router = useRouter()
+    const dictResource = useGetResource<Record<string, string[]>>(MAALULA_DICTS_URL, {})
 
-    const language = ELanguage.maalula
+    const dictData = computed(() => dictResource.data.value ?? {})
 
-    const assetName = AssetName.maalulaDictsJson
-
-    const dictData = computed<Record<string, string[]>>(() => {
-        const data = assetsStore[assetName]?.data
-        if (!data || typeof data !== 'object') {
-            return {}
-        }
-        return data as Record<string, string[]>
-    })
-
-    const chosenDictionaries = ref<string[]>(extractArrayFromQuery(route.query.dict))
-
-    watch(
-        () => route.query.dict,
-        (newValue) => {
-            chosenDictionaries.value = extractArrayFromQuery(newValue)
-        }
-    )
-
-    watch(
-        chosenDictionaries,
-        (newValue) => {
-            const currentValue = extractArrayFromQuery(route.query.dict)
-            if (JSON.stringify(currentValue) !== JSON.stringify(newValue)) {
-                router.push({
-                    query: {
-                        ...route.query,
-                        dict: newValue.length > 0 ? JSON.stringify(newValue) : undefined,
-                    },
-                })
-            }
-        },
-        { deep: true }
-    )
+    const chosenDictionaries = useRouteQuery<string[]>('dict', [])
 
     const {
         searcher,
         searcherString,
     } = useSearcher()
 
-    const initialDicts = computed<IDict[]>(() => Lexica[language] || [])
-
     watchEffect(() => {
         if (chosenDictionaries.value.length === 0) {
-            chosenDictionaries.value = initialDicts.value.filter(({ isChosen }) => isChosen).map(({ key }) => key)
+            chosenDictionaries.value = initialDictionaries.filter(({ isChosen }) => isChosen).map(({ key }) => key)
         }
     })
 
@@ -91,10 +36,9 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
         if (!searcherString.value) {
             return []
         }
-        return initialDicts.value.map(({
+        return initialDictionaries.map(({
             key,
             title,
-            translationLanguage,
         }) => {
             const lexicon = getLexiconByKeyName(key)
             const matchingLines = lexicon
@@ -102,7 +46,6 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
                 .map((line: string) => ({
                     title: '',
                     line,
-                    translationLanguage,
                 }))
             return {
                 key,
@@ -118,7 +61,7 @@ export const useSimpleDictStore = defineStore('simpleDictStore', () => {
 
     return {
         searcher,
-        initialDicts,
+        initialDictionaries,
         dictData,
         searcherString,
         chosenDictionaries,

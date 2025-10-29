@@ -1,8 +1,13 @@
 export default defineAppConfig({
     ui: {
         colors: {
-            primary: 'green',
+            primary: 'teal',
             neutral: 'slate',
         },
+        button: {
+            base: 'cursor-pointer',
+            defaultVariants: {},
+        },
     },
+    footer: { credits: '' },
 })

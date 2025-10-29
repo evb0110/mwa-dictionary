@@ -2,7 +2,7 @@
 @import '@nuxt/ui';
 
 @theme static {
-    --font-sans: 'Public Sans', sans-serif;
+    --font-sans: system-ui, sans-serif;
 
     --color-green-50: #effdf5;
     --color-green-100: #d9fbe8;
@@ -17,8 +17,3 @@
     --color-green-950: #052e16;
 }
 
-.page-number-font {
-    font-family: 'EB Garamond', 'Baskerville', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-    font-weight: 400;
-    font-feature-settings: 'lnum' 1, 'tnum' 1;
-}

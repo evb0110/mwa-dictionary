@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
     title: string
     subtitle?: string
-    showPdfControls?: boolean
 }>()
 </script>
 
@@ -14,9 +13,9 @@ const props = defineProps<{
                 <span v-if="subtitle" class="subtitle">{{ subtitle }}</span>
             </div>
 
-            <slot name="pdf-nav" />
+            <slot name="pdf-nav"></slot>
 
-            <slot name="pdf-zoom" />
+            <slot name="pdf-zoom"></slot>
         </div>
     </div>
 </template>

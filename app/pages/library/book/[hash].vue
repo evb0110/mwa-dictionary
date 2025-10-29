@@ -32,7 +32,7 @@ useSeoMeta({
     <div class="book-page">
         <div class="pdf-viewer-container">
             <ClientOnly>
-                <LazyPdfPageViewer v-if="hash" :hash="hash" :book="book"/>
+                <LazyPdfPageViewer v-if="hash" :hash="hash" :book="book" />
             </ClientOnly>
         </div>
     </div>
