@@ -73,28 +73,5 @@ useSeoMeta({
                 },
             ]"
         />
-
-        <UPageSection>
-            <UPageCTA
-                title="Start exploring Modern Western Aramaic"
-                description="Access comprehensive dictionary resources and reference materials for Aramaic research."
-                variant="subtle"
-                :links="[
-                    {
-                        label: 'Search Dictionary',
-                        to: '/dictionary',
-                        trailingIcon: 'i-lucide-arrow-right',
-                        color: 'neutral',
-                    },
-                    {
-                        label: 'Browse Library',
-                        to: '/library',
-                        icon: 'i-lucide-library',
-                        color: 'neutral',
-                        variant: 'outline',
-                    },
-                ]"
-            />
-        </UPageSection>
     </div>
 </template>

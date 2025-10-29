@@ -21,7 +21,7 @@ A web application for searching and accessing Modern Western Aramaic linguistic 
 
 ## Important Notes
 
-- **SSR Configuration**: PDF viewer pages run client-side only (`/library/book/**` has `ssr: false`)
+- **SSR Configuration**: Most pages should use SSR wherever possible for better performance and SEO. Exception: PDF viewer pages run client-side only (`/library/book/**` has `ssr: false`) due to browser API requirements
 - **IndexedDB**: All IDB operations must check for browser environment
 - **PDF.js**: Requires browser APIs (DOMMatrix, Canvas) - client-side only
 - **Icon Sizing**: Custom CSS overrides Nuxt UI icon sizes (1.75rem for PDF controls)

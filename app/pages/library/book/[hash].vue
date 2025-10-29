@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useBookStore } from '@/stores/book'
+import { bookByHash } from '@/data/books'
 
 const route = useRoute()
 const hash = computed(() => route.params.hash as string)
 
-const bookStore = useBookStore()
-
 const book = computed(() => {
-    const foundBook = bookStore.bookByHash[hash.value]
+    const foundBook = bookByHash[hash.value]
     if (!foundBook) return null
 
     return {
