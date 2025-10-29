@@ -13,10 +13,10 @@ useSeoMeta({
 
 <template>
     <div class="library-page">
-        <div class="header">
-            <h1>Library</h1>
-            <p>Available dictionaries and reference materials</p>
-        </div>
+        <AppHeader
+            title="Library"
+            subtitle="Available dictionaries and reference materials"
+        />
 
         <div class="books-list">
             <UCard v-for="book in books" :key="book.hash" class="book-card">
@@ -54,26 +54,18 @@ useSeoMeta({
 
 <style scoped>
 .library-page {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.header {
-    margin-bottom: 2rem;
-}
-
-.header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.header p {
-    color: #666;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .books-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;

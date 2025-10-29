@@ -16,3 +16,9 @@
     --color-green-900: #0a5331;
     --color-green-950: #052e16;
 }
+
+.page-number-font {
+    font-family: 'EB Garamond', 'Baskerville', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-weight: 400;
+    font-feature-settings: 'lnum' 1, 'tnum' 1;
+}

@@ -274,89 +274,91 @@ function navigateToPageNumber(newNumber: number) {
 <template>
     <div ref="pdfWrapper" class="pdf-wrapper">
         <fieldset :disabled="isLoading">
-            <div class="controls">
-                <div class="title-section">
-                    <span class="book-title">{{ book?.title || 'Loading...' }}</span>
-                    <span v-if="book?.author" class="book-meta">{{ book.author }} ({{ book.year }})</span>
-                </div>
-
-                <div class="nav-section gap">
-                    <UButton
-                        :disabled="currentPageNumber <= 1"
-                        icon="i-lucide-chevrons-left"
-                        variant="ghost"
-                        size="lg"
-                        @click="navigateToPageNumber(1)"
-                    />
-                    <UButton
-                        :disabled="currentPageNumber <= 1"
-                        icon="i-lucide-chevron-left"
-                        variant="ghost"
-                        size="lg"
-                        @click="navigateToPageNumber(currentPageNumber - 1)"
-                    />
-
-                    <div class="page-number gap">
-                        <span>Page</span>
-                        <UInput
-                            v-model="currentPageString"
+            <AppHeader
+                :title="book?.title || 'Loading...'"
+                :subtitle="book?.author && book?.year ? `${book.author} (${book.year})` : undefined"
+            >
+                <template #pdf-nav>
+                    <div class="nav-section gap">
+                        <UButton
+                            :disabled="currentPageNumber <= 1"
+                            icon="i-lucide-chevrons-left"
+                            variant="ghost"
                             size="lg"
-                            class="page-input"
-                            @change="setPageNumber"
+                            @click="navigateToPageNumber(1)"
                         />
-                        <span class="current-page">({{ currentPageNumber || '' }})</span>
-                        <span>of {{ totalPages }}</span>
+                        <UButton
+                            :disabled="currentPageNumber <= 1"
+                            icon="i-lucide-chevron-left"
+                            variant="ghost"
+                            size="lg"
+                            @click="navigateToPageNumber(currentPageNumber - 1)"
+                        />
+
+                        <div class="page-number gap">
+                            <span>Page</span>
+                            <UInput
+                                v-model="currentPageString"
+                                size="lg"
+                                class="page-input"
+                                @change="setPageNumber"
+                            />
+                            <span class="current-page">({{ currentPageNumber || '' }})</span>
+                            <span>of {{ totalPages }}</span>
+                        </div>
+
+                        <UButton
+                            :disabled="currentPageNumber >= totalPages"
+                            icon="i-lucide-chevron-right"
+                            variant="ghost"
+                            size="lg"
+                            @click="navigateToPageNumber(currentPageNumber + 1)"
+                        />
+                        <UButton
+                            :disabled="currentPageNumber === totalPages"
+                            icon="i-lucide-chevrons-right"
+                            variant="ghost"
+                            size="lg"
+                            @click="navigateToPageNumber(totalPages)"
+                        />
                     </div>
+                </template>
 
-                    <UButton
-                        :disabled="currentPageNumber >= totalPages"
-                        icon="i-lucide-chevron-right"
-                        variant="ghost"
-                        size="lg"
-                        @click="navigateToPageNumber(currentPageNumber + 1)"
-                    />
-                    <UButton
-                        :disabled="currentPageNumber === totalPages"
-                        icon="i-lucide-chevrons-right"
-                        variant="ghost"
-                        size="lg"
-                        @click="navigateToPageNumber(totalPages)"
-                    />
-                </div>
-
-                <div class="zoom-section gap">
-                    <UButton
-                        icon="i-lucide-zoom-out"
-                        variant="ghost"
-                        size="lg"
-                        @click="zoomOut"
-                    />
-                    <UButton
-                        icon="i-lucide-zoom-in"
-                        variant="ghost"
-                        size="lg"
-                        @click="zoomIn"
-                    />
-                    <UButton
-                        icon="i-lucide-arrow-left-right"
-                        variant="ghost"
-                        size="lg"
-                        @click="fitWidth"
-                    />
-                    <UButton
-                        icon="i-lucide-arrow-up-down"
-                        variant="ghost"
-                        size="lg"
-                        @click="fitHeight"
-                    />
-                    <UButton
-                        :icon="isFullscreen ? 'i-lucide-minimize' : 'i-lucide-expand'"
-                        variant="ghost"
-                        size="lg"
-                        @click="toggle"
-                    />
-                </div>
-            </div>
+                <template #pdf-zoom>
+                    <div class="zoom-section gap">
+                        <UButton
+                            icon="i-lucide-zoom-out"
+                            variant="ghost"
+                            size="lg"
+                            @click="zoomOut"
+                        />
+                        <UButton
+                            icon="i-lucide-zoom-in"
+                            variant="ghost"
+                            size="lg"
+                            @click="zoomIn"
+                        />
+                        <UButton
+                            icon="i-lucide-arrow-left-right"
+                            variant="ghost"
+                            size="lg"
+                            @click="fitWidth"
+                        />
+                        <UButton
+                            icon="i-lucide-arrow-up-down"
+                            variant="ghost"
+                            size="lg"
+                            @click="fitHeight"
+                        />
+                        <UButton
+                            :icon="isFullscreen ? 'i-lucide-minimize' : 'i-lucide-expand'"
+                            variant="ghost"
+                            size="lg"
+                            @click="toggle"
+                        />
+                    </div>
+                </template>
+            </AppHeader>
         </fieldset>
 
         <div
@@ -401,39 +403,6 @@ function navigateToPageNumber(newNumber: number) {
 
 .content:active {
     cursor: grabbing;
-}
-
-.controls {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
-    padding: 0.75rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    justify-content: space-between;
-}
-
-.title-section {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-}
-
-.book-title {
-    font-size: 1rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.book-meta {
-    font-size: 0.875rem;
-    color: #666;
-    white-space: nowrap;
-    flex-shrink: 0;
 }
 
 .nav-section {

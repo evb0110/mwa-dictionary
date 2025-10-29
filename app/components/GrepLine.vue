@@ -41,9 +41,7 @@ span {
 }
 
 .highlight {
-    background-color: #fef08a;
+    color: red;
     font-weight: 600;
-    padding: 0.1rem 0.2rem;
-    border-radius: 0.2rem;
 }
 </style>
