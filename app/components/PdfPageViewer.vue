@@ -285,14 +285,14 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevrons-left"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(1)"
+                            @click="navigateToPageNumber(1,)"
                         />
                         <UButton
                             :disabled="currentPageNumber <= 1"
                             icon="i-lucide-chevron-left"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(currentPageNumber - 1)"
+                            @click="navigateToPageNumber(currentPageNumber - 1,)"
                         />
 
                         <div class="page-number gap">
@@ -312,14 +312,14 @@ function navigateToPageNumber(newNumber: number) {
                             icon="i-lucide-chevron-right"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(currentPageNumber + 1)"
+                            @click="navigateToPageNumber(currentPageNumber + 1,)"
                         />
                         <UButton
                             :disabled="currentPageNumber === totalPages"
                             icon="i-lucide-chevrons-right"
                             variant="ghost"
                             size="lg"
-                            @click="navigateToPageNumber(totalPages)"
+                            @click="navigateToPageNumber(totalPages,)"
                         />
                     </div>
                 </template>
@@ -370,7 +370,7 @@ function navigateToPageNumber(newNumber: number) {
             @mouseleave="isDragging = false"
         >
             <div v-if="isLoading" class="loading">
-                <USkeleton class="h-full w-full"/>
+                <USkeleton class="h-full w-full" />
             </div>
             <div v-else-if="isValidPageNumber" ref="pdfContainer" class="pdf-container">
                 <div ref="canvasWrapper" class="canvas-wrapper">
@@ -438,10 +438,17 @@ function navigateToPageNumber(newNumber: number) {
     gap: 0.5rem;
     align-items: center;
     padding: 0 0.5rem;
+    font-family: monospace;
+    font-variant-numeric: tabular-nums;
 }
 
 .page-input {
     max-width: 5rem;
+}
+
+.page-input :deep(input) {
+    font-family: monospace;
+    font-variant-numeric: tabular-nums;
 }
 
 .current-page {

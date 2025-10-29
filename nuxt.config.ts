@@ -6,20 +6,12 @@ export default defineNuxtConfig({
 
     css: ['~/assets/css/main.css'],
 
-    ui: {
-        global: true,
-        safelistColors: ['primary', 'neutral'],
-    },
-
-    app: {
-        pageTransition: false,
-        layoutTransition: false,
-    },
-
     routeRules: {
         '/': { prerender: true },
         '/library/book/**': { ssr: false },
     },
+
+    devServer: { port: 3600 },
 
     compatibilityDate: '2025-01-15',
 
@@ -28,7 +20,7 @@ export default defineNuxtConfig({
     eslint: {
         config: {
             stylistic: {
-                commaDangle: 'never',
+                commaDangle: 'always',
                 braceStyle: '1tbs',
             },
         },

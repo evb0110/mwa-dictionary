@@ -23,7 +23,7 @@ const arrayOfArrays = computed(() => {
 <template>
     <div class="grep-line">
         <div v-for="(stringArray, paragraphIndex) in arrayOfArrays" :key="paragraphIndex">
-            <span v-for="(part, index) in stringArray" :key="index" :class="{ highlight: index % 2 }">
+            <span v-for="(part, index) in stringArray" :key="index" :class="{ highlight: index % 2, }">
                 {{ part }}
             </span>
         </div>
@@ -37,7 +37,7 @@ const arrayOfArrays = computed(() => {
 }
 
 span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: sans-serif;
 }
 
 .highlight {

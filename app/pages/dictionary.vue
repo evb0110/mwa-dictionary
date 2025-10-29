@@ -9,11 +9,6 @@ const matchingDictLinesArr = computed(() => {
         simpleDictStore.chosenDictionaries.includes(key)
     )
 })
-
-useSeoMeta({
-    title: 'Dictionary - Modern Western Aramaic',
-    description: 'Search the Arnold Maalula Dictionary for Modern Western Aramaic',
-})
 </script>
 
 <template>
@@ -24,7 +19,7 @@ useSeoMeta({
 
         <div class="content-wrapper">
             <div class="search-section">
-                <DictSearcher/>
+                <DictSearcher />
             </div>
 
             <div v-if="matchingDictLinesArr.length > 0" class="results-section">
@@ -45,12 +40,12 @@ useSeoMeta({
             </div>
 
             <div v-else-if="simpleDictStore.searcherString" class="no-results">
-                <UIcon name="i-lucide-search-x" class="icon"/>
+                <UIcon name="i-lucide-search-x" class="icon" />
                 <p>No results found for "{{ simpleDictStore.searcherString }}"</p>
             </div>
 
             <div v-else class="empty-state">
-                <UIcon name="i-lucide-book-open" class="icon"/>
+                <UIcon name="i-lucide-book-open" class="icon" />
                 <p>Enter a search term to find entries in the dictionary</p>
             </div>
         </div>
@@ -67,6 +62,7 @@ useSeoMeta({
 .content-wrapper {
     flex: 1;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     padding: 2rem;
 }
 

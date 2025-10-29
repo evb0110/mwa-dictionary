@@ -54,7 +54,7 @@ watch(
                 :key="char"
                 size="xs"
                 variant="ghost"
-                @click="insertChar(char)"
+                @click="insertChar(char,)"
             >
                 {{ char }}
             </UButton>
