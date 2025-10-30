@@ -72,6 +72,7 @@ async function loadDictionaryLinesFromAssets(_event: H3Event, key: string) {
             .replace(/\r/g, '\n')
             .replace(/[\u2028\u2029]/g, '\n')
             .replace(/[\u200B-\u200F\uFEFF]/g, '')
+            .replace(/\n\s*\+\+\s*\n/g, '\n\n')
         const entries = normalized
             .split(/\n\s*\n/)
             .map(entry => entry.trim())

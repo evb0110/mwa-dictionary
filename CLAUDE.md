@@ -19,6 +19,13 @@ A web application for searching and accessing Modern Western Aramaic linguistic 
 - Client-side PDF caching with IndexedDB
 - Responsive design with monospace pagination controls
 
+## Data Source
+
+- **Dictionary Data**: All dictionary and linguistic data is sourced from the **../aramaictexts project**
+- **Data Location**: The aramaictexts project is a sibling directory containing the source materials
+- **Entry Splitting**: Dictionary entries should be split on page markers (e.g., `{стр. 73}`) to create separate entries
+- **Data Issue**: Original data contains `++` markers instead of blank lines between some entries
+
 ## Important Notes
 
 - **SSR Configuration**: Most pages should use SSR wherever possible for better performance and SEO. Exception: PDF viewer pages run client-side only (`/library/book/**` has `ssr: false`) due to browser API requirements
