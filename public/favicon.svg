@@ -2,17 +2,9 @@
   <!-- White background -->
   <rect width="32" height="32" fill="#ffffff"/>
 
-  <!-- Large open book - left page -->
-  <path d="M 1 5 L 1 27 Q 1 25 7 25 Q 13 25 15 27 L 15 7 Q 13 5 7 5 Z"
-        fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+  <!-- Single merged book shape filling entire space -->
+  <rect x="1" y="1" width="30" height="30" rx="2" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
 
-  <!-- Large open book - right page -->
-  <path d="M 31 5 L 31 27 Q 31 25 25 25 Q 19 25 17 27 L 17 7 Q 19 5 25 5 Z"
-        fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
-
-  <!-- Center spine -->
-  <line x1="16" y1="5" x2="16" y2="27" stroke="#d97706" stroke-width="2"/>
-
-  <!-- Large Aramaic Aleph - dark for contrast -->
-  <text x="16" y="22" font-family="serif" font-size="18" font-weight="bold" fill="#7c2d12" text-anchor="middle">א</text>
+  <!-- Extra large Aramaic Aleph, vertically centered -->
+  <text x="16" y="25" font-family="serif" font-size="32" font-weight="bold" fill="#7c2d12" text-anchor="middle">א</text>
 </svg>
