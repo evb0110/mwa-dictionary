@@ -3,7 +3,7 @@
   <rect width="32" height="32" fill="#ffffff"/>
 
   <!-- Single merged book shape filling entire space -->
-  <rect x="1" y="1" width="30" height="30" rx="2" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+  <rect x="0" y="0" width="32" height="32" rx="0" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
 
   <!-- Extra large Aramaic Aleph, vertically centered -->
   <text x="16" y="25" font-family="serif" font-size="32" font-weight="bold" fill="#7c2d12" text-anchor="middle">א</text>
