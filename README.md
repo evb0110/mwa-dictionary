@@ -1,49 +1,60 @@
-# Nuxt Starter Template
+# Modern Western Aramaic Dictionary
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+A web application for searching and accessing Modern Western Aramaic linguistic resources, providing an intuitive interface for dictionary search and reference material browsing.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+## Features
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+### Dictionary Search
+- Fast, client-side search with regex-based query matching
+- Smart highlighting of search results
+- Virtual keyboard for Maalula script input
+- Support for complex search patterns
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-  </picture>
-</a>
+### PDF Library Browser
+- Interactive PDF viewer with zoom controls
+- Drag-to-scroll navigation
+- Page-by-page rendering with monospace pagination controls
+- Client-side caching via IndexedDB for offline access
+- Reference materials and linguistic resources
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+### Performance
+- Server-side rendering (SSR) for fast initial load and SEO
+- Client-side caching reduces bandwidth and improves performance
+- Optimized PDF rendering with canvas-based display
+- Responsive design for desktop and mobile devices
 
-## Quick Start
+## Tech Stack
 
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
-```
+- **Framework**: Nuxt 4.2.0 with Vue 3 Composition API
+- **Language**: TypeScript with strict type safety
+- **UI**: Nuxt UI 4.1.0 + Tailwind CSS
+- **State Management**: Pinia stores
+- **PDF Rendering**: pdfjs-dist 5.4.296
+- **Storage**: IndexedDB via idb library
+- **Package Manager**: pnpm 10.19.0
 
-## Deploy your own
+## Getting Started
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+### Prerequisites
 
-## Setup
+- Node.js (LTS version recommended)
+- pnpm 10.19.0 or higher
 
-Make sure to install the dependencies:
+### Installation
 
 ```bash
 pnpm install
 ```
 
-## Development Server
+### Development
 
-Start the development server on `http://localhost:3000`:
+Start the development server at `http://localhost:3000`:
 
 ```bash
 pnpm dev
 ```
 
-## Production
+### Build
 
 Build the application for production:
 
@@ -51,10 +62,102 @@ Build the application for production:
 pnpm build
 ```
 
-Locally preview production build:
+Preview production build locally:
 
 ```bash
 pnpm preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### Code Quality
+
+Run linting and type checks:
+
+```bash
+pnpm lint         # ESLint with auto-fix
+pnpm typecheck    # TypeScript type checking
+pnpm format       # Prettier formatting
+```
+
+## Project Structure
+
+```
+app/
+├── components/          # Vue components
+│   ├── AppHeader.vue           # Shared header navigation
+│   ├── DictSearcher.vue        # Dictionary search interface
+│   ├── DictSearchInput.vue     # Search input with keyboard
+│   ├── MaalulaKeyboard.vue     # Virtual keyboard for Maalula script
+│   ├── SearchResults.vue       # Search results display
+│   ├── GrepLine.vue            # Highlighted result line
+│   └── PdfPageViewer.vue       # PDF viewer with controls
+│
+├── pages/               # File-based routing
+│   ├── index.vue               # Dictionary search page
+│   ├── library/
+│   │   ├── index.vue           # Library browser
+│   │   └── book/[hash].vue     # PDF viewer (SSR disabled)
+│
+├── stores/              # Pinia state management
+│   └── simpleDict.ts           # Dictionary data store
+│
+├── composables/         # Vue composables
+│   ├── useSearcher.ts          # Search logic
+│   ├── useScale.ts             # PDF zoom controls
+│   └── usePdfCache.ts          # IndexedDB caching
+│
+├── utils/               # Utility functions
+│   ├── idb.ts                  # IndexedDB helpers
+│   ├── pageNumbers.ts          # PDF page utilities
+│   └── getPadding.ts           # Layout utilities
+│
+├── data/                # Static data
+│   ├── assets.ts               # Dictionary assets metadata
+│   ├── books.ts                # Library reference materials
+│   └── maalulaButtons.ts       # Keyboard layout
+│
+└── types/               # TypeScript types
+    └── index.ts                # Shared type definitions
+```
+
+## Technical Details
+
+### Server-Side Rendering (SSR)
+
+- Most pages use SSR for optimal performance and SEO
+- Exception: PDF viewer (`/library/book/**`) runs client-side only due to browser API requirements (Canvas, DOMMatrix)
+
+### IndexedDB Caching
+
+- All IndexedDB operations include browser environment checks
+- PDF documents are cached for offline access
+- Automatic cache management to optimize storage
+
+### Type Safety
+
+- Interfaces prefixed with `I` (e.g., `IBook`, `IAsset`)
+- Type aliases prefixed with `T` (e.g., `TStatus`)
+- Strict TypeScript configuration with no type assertions
+- Runtime type guards for data validation
+
+### PDF Rendering
+
+- pdfjs-dist for high-quality PDF rendering
+- Canvas-based page rendering
+- Zoom levels: 0.5x to 2.0x
+- Lazy loading for performance
+
+## Code Conventions
+
+- **Type Safety**: No `any` types, no type assertions (`as`), use type guards
+- **Nullish Coalescing**: Prefer `??` over `||` for null/undefined checks
+- **Async/Await**: Remove `async` keyword if not awaiting anything
+- **Code Comments**: Self-documenting code preferred over comments
+- **Formatting**: Prettier + ESLint for consistent code style
+
+## License
+
+Private project - All rights reserved
+
+## Contributing
+
+This is a private project. For questions or issues, contact the project maintainer.

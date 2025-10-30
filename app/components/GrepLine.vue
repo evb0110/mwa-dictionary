@@ -85,6 +85,12 @@ function getAllMatches(text: string, config: { source: string
     return matches
 }
 
+interface IPart {
+    text: string
+    isMatch: boolean
+    isLemma: boolean
+}
+
 const arrayOfArrays = computed(() => {
     const text = sanitizedText.value
     const config = getHighlightConfig()
@@ -92,7 +98,8 @@ const arrayOfArrays = computed(() => {
     if (!config) {
         return text.split('\n').map(line => [{
             text: line,
-            highlight: false,
+            isMatch: false,
+            isLemma: false,
         }])
     }
 
@@ -100,13 +107,13 @@ const arrayOfArrays = computed(() => {
     if (matches.length === 0) {
         return text.split('\n').map(line => [{
             text: line,
-            highlight: false,
+            isMatch: false,
+            isLemma: false,
         }])
     }
 
     const lines = text.split('\n')
-    const result: Array<Array<{ text: string
-        highlight: boolean }>> = []
+    const result: Array<Array<IPart>> = []
 
     let charIndex = 0
     for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
@@ -114,9 +121,35 @@ const arrayOfArrays = computed(() => {
         const lineStart = charIndex
         const lineEnd = charIndex + line.length
 
-        const parts: Array<{ text: string
-            highlight: boolean }> = []
+        const spaceOrEmojiMatch = line.search(/[\s\u{1F130}-\u{1F149}]/u)
+        const lemmaEnd = spaceOrEmojiMatch === -1 ? line.length : spaceOrEmojiMatch
+        const isLemmaMode = props.scope === 'lemma' && lineIndex === 0
+
+        const parts: IPart[] = []
         let lastIndex = 0
+
+        const addSegment = (startIdx: number, endIdx: number, isMatch: boolean) => {
+            if (startIdx >= endIdx) return
+
+            if (isLemmaMode && startIdx < lemmaEnd && endIdx > lemmaEnd) {
+                parts.push({
+                    text: line.slice(startIdx, lemmaEnd),
+                    isMatch,
+                    isLemma: true,
+                })
+                parts.push({
+                    text: line.slice(lemmaEnd, endIdx),
+                    isMatch,
+                    isLemma: false,
+                })
+            } else {
+                parts.push({
+                    text: line.slice(startIdx, endIdx),
+                    isMatch,
+                    isLemma: isLemmaMode && startIdx < lemmaEnd,
+                })
+            }
+        }
 
         for (const match of matches) {
             if (match.end <= lineStart || match.start >= lineEnd) {
@@ -127,31 +160,23 @@ const arrayOfArrays = computed(() => {
             const matchEndInLine = Math.min(line.length, match.end - lineStart)
 
             if (matchStartInLine > lastIndex) {
-                parts.push({
-                    text: line.slice(lastIndex, matchStartInLine),
-                    highlight: false,
-                })
+                addSegment(lastIndex, matchStartInLine, false)
             }
 
-            parts.push({
-                text: line.slice(matchStartInLine, matchEndInLine),
-                highlight: true,
-            })
+            addSegment(matchStartInLine, matchEndInLine, true)
             lastIndex = matchEndInLine
         }
 
         if (lastIndex < line.length) {
-            parts.push({
-                text: line.slice(lastIndex),
-                highlight: false,
-            })
+            addSegment(lastIndex, line.length, false)
         }
 
         result.push(parts.length > 0
             ? parts
             : [{
                     text: line,
-                    highlight: false,
+                    isMatch: false,
+                    isLemma: isLemmaMode,
                 }])
         charIndex = lineEnd + 1
     }
@@ -166,7 +191,10 @@ const arrayOfArrays = computed(() => {
             <span
                 v-for="(part, index) in stringArray"
                 :key="`${paragraphIndex}-${index}`"
-                :class="{ highlight: part.highlight }"
+                :class="{
+                    'highlight-match': part.isMatch,
+                    'highlight-lemma': part.isLemma,
+                }"
             >
                 {{ part.text }}
             </span>
@@ -184,8 +212,13 @@ span {
     font-family: sans-serif;
 }
 
-.highlight {
+.highlight-match {
     color: red;
     font-weight: 600;
+}
+
+.highlight-lemma {
+    background-color: rgb(245 197 76 / 0.25);
+    padding-block: 4px;
 }
 </style>
