@@ -72,68 +72,27 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="search-results">
-        <div v-for="({ line }, index) in visibleItems" :key="index" class="entry-item">
-            <div class="entry-content">
+    <div class="flex flex-col gap-4">
+        <div v-for="({ line }, index) in visibleItems" :key="index" class="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md dark:hover:shadow-gray-900/50">
+            <div class="flex flex-col gap-2">
                 <NuxtLink
                     v-if="getPageNumber(line) && currentBook"
                     :to="getBookRoute(getPageNumber(line))"
                     target="_blank"
-                    class="page-badge"
+                    class="self-start"
                 >
                     <UBadge color="primary" variant="solid">Page {{ getPageNumber(line) }}</UBadge>
                 </NuxtLink>
-                <div class="entry-text">
+                <div class="text-base leading-relaxed text-gray-900 dark:text-gray-100">
                     <GrepLine :str="getCleanedLine(line)" :searcher="searcher" :scope="scope" />
                 </div>
             </div>
         </div>
 
-        <div v-if="hasMore" ref="loadMoreTrigger" class="load-more">
+        <div v-if="hasMore" ref="loadMoreTrigger" class="flex justify-center p-4">
             <UButton variant="ghost" icon="i-lucide-chevron-down" @click="loadMore">
                 Load More
             </UButton>
         </div>
     </div>
 </template>
-
-<style scoped>
-.search-results {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.entry-item {
-    padding: 1rem;
-    background-color: white;
-    border-radius: 0.5rem;
-    border: 1px solid #e5e5e5;
-    transition: all 0.2s;
-}
-
-.entry-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.entry-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.page-badge {
-    align-self: flex-start;
-}
-
-.entry-text {
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.load-more {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-}
-</style>

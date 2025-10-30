@@ -34,20 +34,20 @@ const matchingDictLinesArr = computed(() => {
 </script>
 
 <template>
-    <div class="dictionary-page">
+    <div class="flex flex-col h-screen">
         <AppHeader
             title="Modern Western Aramaic Dictionary"
         />
 
-        <div class="content-wrapper">
-            <div class="search-section">
+        <div class="flex-1 overflow-y-auto p-8" style="scrollbar-gutter: stable;">
+            <div class="max-w-6xl mx-auto mb-8 w-full">
                 <DictSearcher />
             </div>
 
-            <div v-if="matchingDictLinesArr.length > 0" class="results-section">
-                <div v-for="dict in matchingDictLinesArr" :key="dict.key" class="dict-section">
-                    <div class="dict-header">
-                        <h2>{{ dict.title }}</h2>
+            <div v-if="matchingDictLinesArr.length > 0" class="max-w-6xl mx-auto w-full flex flex-col gap-8">
+                <div v-for="dict in matchingDictLinesArr" :key="dict.key" class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl border border-gray-200 dark:border-gray-800 transition-colors">
+                    <div class="flex items-center gap-4 mb-6">
+                        <h2 class="text-2xl font-semibold m-0 text-gray-900 dark:text-white">{{ dict.title }}</h2>
                         <UBadge v-if="dict.lines.length" color="neutral" variant="subtle">
                             {{ dict.lines.length }} result{{ dict.lines.length !== 1 ? 's' : '' }}
                         </UBadge>
@@ -62,88 +62,15 @@ const matchingDictLinesArr = computed(() => {
                 </div>
             </div>
 
-            <div v-else-if="simpleDictStore.searcherString" class="no-results">
-                <UIcon name="i-lucide-search-x" class="icon" />
-                <p>No results found for "{{ simpleDictStore.searcherString }}"</p>
+            <div v-else-if="simpleDictStore.searcherString" class="flex flex-col items-center justify-center p-16 text-center text-gray-500 dark:text-gray-400">
+                <UIcon name="i-lucide-search-x" class="text-6xl mb-4 opacity-50" />
+                <p class="text-lg">No results found for "{{ simpleDictStore.searcherString }}"</p>
             </div>
 
-            <div v-else class="empty-state">
-                <UIcon name="i-lucide-book-open" class="icon" />
-                <p>Enter a search term to find entries in the dictionary</p>
+            <div v-else class="flex flex-col items-center justify-center p-16 text-center text-gray-500 dark:text-gray-400">
+                <UIcon name="i-lucide-book-open" class="text-6xl mb-4 opacity-50" />
+                <p class="text-lg">Enter a search term to find entries in the dictionary</p>
             </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-.dictionary-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.content-wrapper {
-    flex: 1;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-    padding: 2rem;
-}
-
-.search-section {
-    max-width: 1200px;
-    margin: 0 auto 2rem;
-    width: 100%;
-}
-
-.results-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.dict-section {
-    background-color: #f9fafb;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    border: 1px solid #e5e7eb;
-}
-
-.dict-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.dict-header h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-.no-results,
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    text-align: center;
-    color: #6b7280;
-}
-
-.no-results .icon,
-.empty-state .icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-.no-results p,
-.empty-state p {
-    font-size: 1.125rem;
-}
-</style>
